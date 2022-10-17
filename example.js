@@ -1,24 +1,58 @@
-var list = document.getElementsByTagName('ul')[0];
+var noteInput, notName, textEntered, targe;
 
-var newItemLast = document.createElement('li');
-var newTextLast = document.createTextNode('cream');
-newItemLast.appendChild(newTextLast);
-list.appendChild(newTextLast);
+noteName = document.getElementById('noteName');
+noteInput = document.getElementById('noteInput');
 
-var newItemFirst = document.createElement('li');
-var newTextFirst = document.createTextNode('kale');
-newItemFirst.appendChild(newTextFirst);
-list.insertBefore(newTextFirst, list.firstChild);
-
-var listItems = document.querySelectorAll('li');
-
-var i;
-for (i = 0; i < listItems.length; i++) {
-    listItems[i].className = 'cool';
+function writelabel(e) {
+    if (!e) {
+        e = window.event
+    }
+    target = e.target|| e.srcElement;
+    textEntered = targe.value;
+    noteName.textContent = textEntered;
 }
 
-var heading = document.querySelector('h2');
-var headingText = heading.firstChild.nodeValue;
-var totalItems = listItems.length;
-var newHeading = headingText + '<span>' + totalItems + '</span>';
-heading.innerHTML = newHeading;
+
+function recorderControls(e) {
+    if (!e) {
+        e = window.event;
+    }
+    target = e.target || e.srcElement;
+    if (e.preventDefault) {
+        e.preventDefault();
+    } else {
+        e.returnValue = false;
+    }
+    switch (target.getAttribute('data-state')) {
+        case 'rexord':
+            record(target);
+            break;
+        case 'stop':
+            stop(target);
+            break;
+
+    }
+}
+
+
+function record(target) {
+    target.setAttribute('data-state', 'stop');
+    target.textContent = 'stop';
+}
+
+function stop(target) {
+    target.setAttribute('data_state', 'record' );
+    target.textContent = 'record';
+}
+
+if (document.addEventListener) {
+    document.addEventListener('click', function (e){
+        recorderControls(e);
+    }, false);
+
+    noteInput.addEventListener('onclick', function (e){
+        recorderControls(e);
+    });
+    noteInput.attachEvnet('onkeyup', writelabel);
+
+}
