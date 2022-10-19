@@ -1,54 +1,16 @@
-function getTarget(e) {
-    if (!e) {
-        e = window.event;
-    }
-    return e.target || e.srcElement;
-}
+$(function () {
+    var listItem, itemStatus, eventType;
 
-function itemDone(e) {
-    var target, elParent, elGrandparent;
-    target = getTarget();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  if ( target.nodeName.toLowerCase() =="a" ) {
-      elListItem = target.parentNode;
-      elList =elListItem.parentNode;
-      elList.removeChild(elListItem);
-  }
-  if ( target.nodeName.toLowerCase() =="em" ) {
-      elListItem = target.parentNode.parentNode;
-      elList = elListItem.parentNode;
-      elList.removeChild(elListItem);
-  }
-
-
-  if (e.preventDefault) {
-     e.preventDefault();
-  } else {
-      e.retuenValue = false;
-  }
-}
-
-
-var el  = document.getElementById('shoppingList');
-if (el.addEventListener) {
-    el.addEventListener('click', function (e) {
-        itemDone(e);
-    },false);
-} else {
-    el.attachEvent('onclick', function (e) {
-        itemDone(e);
-    });
-}
+    $('ul').on(
+        'click mouseover',
+        ':not(#four)',
+        {status: 'important'},
+        function(e){
+            listItem = 'Item: ' +e.target.textContent + '<br />';
+            itemStatus = 'status: ' + e.data.status + '<br />';
+            eventType = ' Event: ' + e.type;
+            $('#notes').html(listItem + itemStatus + eventType);
+        }
+    );
+    
+});

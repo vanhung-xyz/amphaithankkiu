@@ -1,58 +1,61 @@
-var noteInput, notName, textEntered, targe;
+$(function () {
 
-noteName = document.getElementById('noteName');
-noteInput = document.getElementById('noteInput');
+    // SETUP
+    var $list, $newItemForm, $newItemButton;
+    var item = '';
+    $list = $('ul');
+    $newItemForm = $('#newItemForm');
+    $newItemButton = $('#newItemButton');
 
-function writelabel(e) {
-    if (!e) {
-        e = window.event
-    }
-    target = e.target|| e.srcElement;
-    textEntered = targe.value;
-    noteName.textContent = textEntered;
-}
-
-
-function recorderControls(e) {
-    if (!e) {
-        e = window.event;
-    }
-    target = e.target || e.srcElement;
-    if (e.preventDefault) {
-        e.preventDefault();
-    } else {
-        e.returnValue = false;
-    }
-    switch (target.getAttribute('data-state')) {
-        case 'rexord':
-            record(target);
-            break;
-        case 'stop':
-            stop(target);
-            break;
-
-    }
-}
-
-
-function record(target) {
-    target.setAttribute('data-state', 'stop');
-    target.textContent = 'stop';
-}
-
-function stop(target) {
-    target.setAttribute('data_state', 'record' );
-    target.textContent = 'record';
-}
-
-if (document.addEventListener) {
-    document.addEventListener('click', function (e){
-        recorderControls(e);
-    }, false);
-
-    noteInput.addEventListener('onclick', function (e){
-        recorderControls(e);
+    $('li').hide().each(function (index) {
+        $(this).delay(450 * index).fadeIn(1600);
     });
-    noteInput.attachEvnet('onkeyup', writelabel);
 
-}
+    // ITEM COUNTER
+    function updateCount() {
+        var items = $('li[class!=complete]').length;
+        $('#counter').text(items);
+    }
+    updateCount();
+
+    // SETUP FORM FOR NEW ITEMS
+    $newItemButton.show();
+    $newItemForm.hide();
+    $('#showForm').on('click', function () {
+        $newItemButton.show();
+        $newItemForm.hide();
+    });
+
+    // ADDING A NEW LIST ITEM
+    $newItemForm.on('submit', function (e) {
+        e.preventDefault();
+        var text = $('input:text').val();
+        $list.append('<li>' + text + '</li>');
+        $('input:text').val('');
+        updateCount();
+    });
+
+    // CLICK HANDING - USE DELEGATION ON <ul> ELEMENT
+    $list.on('click', 'li', function () {
+        var $this = $(this);
+        var complete = $this.hasClass('complete');
+
+        if(complete === true) {
+            $this.animate({
+                opacity: 0.0,
+                paddingLeft: '+=180'
+            }, 500, 'swing', function () {
+                $this.remove();
+            });
+        } else {
+            item = $this.text();
+            $this.remove();
+            $list
+                .append('li class=\"complete\">' + item + '</li>')
+                .hide().fadeIn(300);
+            updateCount();
+        }
+
+    });
+
+});

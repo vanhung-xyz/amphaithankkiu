@@ -1,22 +1,23 @@
-var elForm, elSelectPackge, elPackageHint, elTerma, elTermsHint;
-elForm          = document.getElementById('formSignup');
-elSelectPackge  = document.getElementById('package');
-elPackageHint   = document.getElementById('packageHint');
-elTerms         = document.getElementById('terms');
-elTermsHint     = document.getElementById('termsHint');
+$(function () {
 
-function packgeHint() {
-    var pack = this.options[this.selectedIndex].value;
-    if (pack === 'monthly') {
-        elPackageHint.innerHTML = 'save $10 if you pay for 1 year!';
-    } else {
-        elPackageHint.innerHTML = 'Wise choice!';
-    }
-}
-function checkTerms(event) {
-    if (!elTerms.checked) {
-        elTermsHint.innerHTML = 'You must agree to the terms.';
-    }
-}
-elForm.addEventListener('submit' , checkTerms, false);
-elSelectPackge.addEventListener('change', packgeHint, false);
+    var $newItemButton = $('#newItemButton');
+    var $newItemForm = $('#newItemForm');
+    var $textInput = $('input:text');
+
+    $newItemButton.show();
+    $newItemForm.hide();
+
+    $('#showForm').on('click',function (){
+        $newItemButton.hide();
+        $newItemForm.show();
+    });
+
+    $newItemForm.on('submit', function (e){
+        e.preventDefault();
+        var newText = $textInput.val();
+        $('li:last').after('<li>' + newText + '</li>');
+        $newItemForm.hide();
+        $newItemButton.show();
+        $textInput.val('');
+    });
+});
