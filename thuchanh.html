@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>thực hành</title>
+    <script src="thuchanh.js"></script>
+
+</head>
+<body>
+<div id="header">
+    <h2> REGISTER</h2>
+</div>
+
+<div id="page">
+
+    <form method="post" action="http://www.example.org/register">
+        <label for="username">Create a username: </label>
+        <input type="text" id="username" onblur="checkUsername()" />
+        <div id="checkusername"></div>
+
+        <label for="email">Create a email: </label>
+        <input type="text" id="email" onblur="checkMail()"  />
+        <div id = "checkmail"></div>
+
+        <label> Enter Password </label>
+        <input type = "password" name = "pswd1">
+        <div id="checkpass1"></div>
+
+        <!-- Enter Confirm password -->
+        <label> Confirm Password </label>
+        <input type = "password" name = "pswd2" onblur="checkPass()">
+        <div id="checkpass2"></div>
+
+        <!--        <input type="submit" value="sign up!" />-->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">I agree to the <a href="#">Terms of Service</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+
+        <p>Already a member? <a href="#">Login Here</a></p>
+
+
+
+    </form>
+
+</div>
+<link rel="stylesheet" href="thuchanh.css">
+
+</body>
+</html>
